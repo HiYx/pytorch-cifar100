@@ -35,8 +35,8 @@ class VGG(nn.Module):
         )
 
     def forward(self, x):
-        output = self.features(x)
-        output = output.view(output.size()[0], -1)
+        output = self.features(x)#([1, 512, 1, 1])
+        output = output.view(output.size()[0], -1)#([1, 512])
         output = self.classifier(output)
 
         return output
@@ -47,7 +47,7 @@ def make_layers(cfg, batch_norm=False):
     input_channel = 3
     for l in cfg:
         if l == 'M':
-            layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
+            layers += [nn.MaxPool2d(kernel_size=2, stride=2,ceil_mode=True)]
             continue
 
         layers += [nn.Conv2d(input_channel, l, kernel_size=3, padding=1)]

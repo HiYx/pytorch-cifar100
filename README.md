@@ -2,7 +2,25 @@
 
 practice on cifar100 using pytorch
 
-## Requirements
+
+
+测试相关工具的基础项目
+
+torch2trt
+
+tensorRT deploy
+
+torch2caffe
+
+caffe2trt
+
+
+
+注：torch2onnx(在onnx-learn的repo中)
+
+
+
+## Requiremnts
 
 This is my experiment eviroument
 - python3.6
@@ -135,7 +153,7 @@ The result I can get from a certain model, since I use the same hyperparameters 
 better result.
 
 |dataset|network|params|top1 err|top5 err|epoch(lr = 0.1)|epoch(lr = 0.02)|epoch(lr = 0.004)|epoch(lr = 0.0008)|total epoch|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |cifar100|mobilenet|3.3M|34.02|10.56|60|60|40|40|200|
 |cifar100|mobilenetv2|2.36M|31.92|09.02|60|60|40|40|200|
 |cifar100|squeezenet|0.78M|30.59|8.36|60|60|40|40|200|
