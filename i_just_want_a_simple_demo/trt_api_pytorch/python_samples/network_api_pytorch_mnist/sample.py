@@ -73,35 +73,44 @@ class ModelData(object):
 
 def populate_network(network, weights):
     # Configure the network layers based on the weights provided.
+    ## 标记网络输入
     input_tensor = network.add_input(name=ModelData.INPUT_NAME, dtype=ModelData.DTYPE, shape=ModelData.INPUT_SHAPE)
 
+    ## 对应PyTorch之self.conv1
     conv1_w = weights['conv1.weight'].numpy()
     conv1_b = weights['conv1.bias'].numpy()
     conv1 = network.add_convolution(input=input_tensor, num_output_maps=20, kernel_shape=(5, 5), kernel=conv1_w, bias=conv1_b)
     conv1.stride = (1, 1)
 
+    ## 对应PyTorch之F.max_pool2d
     pool1 = network.add_pooling(input=conv1.get_output(0), type=trt.PoolingType.MAX, window_size=(2, 2))
     pool1.stride = (2, 2)
 
+    ## 对应PyTorch之self.conv2
     conv2_w = weights['conv2.weight'].numpy()
     conv2_b = weights['conv2.bias'].numpy()
     conv2 = network.add_convolution(pool1.get_output(0), 50, (5, 5), conv2_w, conv2_b)
     conv2.stride = (1, 1)
 
+    ## 对应PyTorch之F.max_pool2d
     pool2 = network.add_pooling(conv2.get_output(0), trt.PoolingType.MAX, (2, 2))
     pool2.stride = (2, 2)
 
+    ## 对应PyTorch之self.fc1
     fc1_w = weights['fc1.weight'].numpy()
     fc1_b = weights['fc1.bias'].numpy()
     fc1 = network.add_fully_connected(input=pool2.get_output(0), num_outputs=500, kernel=fc1_w, bias=fc1_b)
-
+    ## 对应PyTorch之self.relu
     relu1 = network.add_activation(input=fc1.get_output(0), type=trt.ActivationType.RELU)
 
+    ## 对应PyTorch之self.fc2
     fc2_w = weights['fc2.weight'].numpy()
     fc2_b = weights['fc2.bias'].numpy()
     fc2 = network.add_fully_connected(relu1.get_output(0), ModelData.OUTPUT_SIZE, fc2_w, fc2_b)
 
+    ## 设置该层输出名字
     fc2.get_output(0).name = ModelData.OUTPUT_NAME
+    ## 标记网络输出
     network.mark_output(tensor=fc2.get_output(0))
 
 def build_engine(weights):
