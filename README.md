@@ -18,7 +18,22 @@ caffe2trt
 
 注：torch2onnx(在onnx-learn的repo中)
 
+## 自己关注的相关CNN仓库shortcut
+- 主要骨干网络快速验证repository
+https://github.com/HiYx/pytorch-cifar100
 
+
+- Implement popular deep learning networks in pytorch, used by tensorrtx. 
+https://github.com/HiYx/pytorchx
+
+- Implementation of popular deep learning networks with TensorRT network definition API 
+https://github.com/HiYx/tensorrtx
+
+- 记录学习ONNX的一些资料以及提供一些实践经验
+https://github.com/HiYx/onnx_learn
+
+- CUDA 操作
+https://github.com/HiYx/CUDA_Test
 
 ## Requiremnts
 
